@@ -5,7 +5,7 @@ use warnings;
 use Ridge::Lite::Engine;
 
 sub install {
-    my ($class, $action, $code) = @_;
+    my ($class, $action, $view, $code) = @_;
 
     if (!$class->can($action)) {
         no strict 'refs';
@@ -19,6 +19,7 @@ package Ridge::Lite::Engine;
 no warnings 'redefine';
 sub $action : Public {
     my (\$self, \$r) = \@_;
+    @{[$view && '\$r->view->available(q{json});']}
     Ridge::Lite::Action::${action}(\$r);
 }
 EOS

@@ -20,4 +20,9 @@ get '/bar/baz' => sub {
     my $r = shift;
 };
 
+get '/qux.json' => sub {
+    my $r = shift;
+       $r->stash->param(quux => 'piyo');
+};
+
 !!1;
