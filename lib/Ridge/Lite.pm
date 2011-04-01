@@ -9,20 +9,20 @@ use Ridge::Lite::Request;
 use Ridge::Lite::Config;
 
 sub import {
-    my %args    = @_ || ();
-    my ($class) = caller();
-
-    my $base    = $args{-base} ? $args{-base} : 'Ridge';
+    my ($class, %args) = @_;
+    my ($pkg) = caller();
+    my $base = $args{-base} ? $args{-base} : 'Ridge';
        $base->use or die $@;
+
     unshift @Ridge::Lite::ISA, $base;
 
     {
         no strict 'refs';
-        unshift @{"$class\::ISA"}, 'Ridge::Lite';
+        unshift @{"$pkg\::ISA"}, 'Ridge::Lite';
     }
 
     Router::Simple::Sinatraish->export_to_level(1);
-    $class->config(Ridge::Lite::Config->new({namespace => 'Ridge::Lite'}));
+    $pkg->config(Ridge::Lite::Config->new({namespace => 'Ridge::Lite'}));
 }
 
 sub make_request {
