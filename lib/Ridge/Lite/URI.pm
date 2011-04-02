@@ -25,7 +25,12 @@ sub route {
         $self->param(%params) if %params;
 
         if ($route->{code}) {
-            Ridge::Lite::Action->install($self->action, $self->view || '', $route->{code});
+            Ridge::Lite::Action->install(
+                $self->action,
+                $env->{REQUEST_METHOD},
+                $self->view || '',
+                $route->{code},
+            );
         }
     }
 }

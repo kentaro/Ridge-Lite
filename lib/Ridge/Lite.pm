@@ -38,15 +38,15 @@ sub process {
 sub install_config {
     my $class = shift;
     my $config_class = join '::', $class, 'Config';
-    eval <<"EOS";
+
+    if (!$config_class->use) {
+        eval <<"EOS";
 package $config_class;
 use base qw(Ridge::Lite::Config);
-
-package Ridge::Config;
-no warnings 'redefine';
-sub find_root { shift->param('root') }
 EOS
-    $class->config($config_class->new);
+    }
+
+    $class->config($config_class->new->setup);
 }
 
 sub make_request {

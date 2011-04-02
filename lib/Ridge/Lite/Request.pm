@@ -7,8 +7,8 @@ use base qw(Ridge::Request);
 $Ridge::Request::PREFERRED_URI = 'Ridge::Lite::URI';
 
 sub route {
-    my ($self, $namespace, $router) = @_;
-    $self->uri->route($namespace, $router, $self->env);
+    my ($self, $router) = @_;
+    $self->uri->route($router, $self->env);
 }
 
 !!1;
