@@ -5,6 +5,13 @@ use warnings;
 use Ridge::Lite;
 
 # $rはRidgeオブジェクト。$r->reqとか$r->resとかでごにょる。
+
+# /         => templates/index.html
+# /index    => templates/index.html
+# /foo      => templates/foo.html
+# /foo/bar  => templates/foo_bar.html
+# /baz.json => なし。$r->stash->paramの中身をjsonで返す
+
 get '/' => sub {
     my $r = shift;
 };
