@@ -6,16 +6,16 @@ my $root = dir(__FILE__)->parent;
 
 use Plack::Builder;
 
-use lib 'eg/simple/lib';
-use MyApp;
+use lib 'eg/guestbook/lib';
+use guestbook;
 
 builder {
     enable 'Plack::Middleware::Static',
         root => $root->subdir('.'),
-        path => qr{^/favicon};
+        path => qr{^/(images|css|js|favicon)};
 
     sub {
         my $env = shift;
-        MyApp->process($env, { root => $root });
+        GuestBook->process($env, { root => $root });
     }
 };

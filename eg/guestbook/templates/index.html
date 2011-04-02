@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>[% r.config.param('title') | html %]</title>
+  </head>
+  <body>
+    <h1>[% r.config.param('title') | html %]</h1>
+
+    [%- IF r.flash.get('error') %]
+    <p style="color:red">[% r.flash.get('error') %]</p>
+    [%- END # IF r.flash.get('error') %]
+
+    <form method="post" action="/post">
+      name: <input type="text" name="name" /><br />
+      <textarea name="comment" rows="3" cols="50"></textarea>
+      <div>
+        <input type="submit" value="post" />
+      </div>
+    </form>
+
+    [%- SET comments = r.comments(10) %]
+    [%- IF comments.size %]
+    <dl>
+      [%- FOREACH comment IN r.comments %]
+      <dt>name: [% comment.name | html %] ([% comment.created | html %])</dt>
+      <dd>comment: [% comment.comment | html %]</dd>
+      [%- END # FOREACH comment IN r.comments %]
+    </dl>
+    [%- END # IF comments.size %]
+  </body>
+</body>
+</html>
