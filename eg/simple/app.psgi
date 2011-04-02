@@ -6,8 +6,8 @@ my $root = dir(__FILE__)->parent;
 
 use Plack::Builder;
 
-use lib 'eg/guestbook/lib';
-use GuestBook;
+use lib 'eg/simple/lib';
+use MyApp;
 
 builder {
     enable 'Plack::Middleware::Static',
@@ -16,6 +16,6 @@ builder {
 
     sub {
         my $env = shift;
-        GuestBook->process($env, { root => $root });
+        MyApp->process($env, { root => $root });
     }
 };
