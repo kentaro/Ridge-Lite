@@ -20,10 +20,10 @@
     [%- SET comments = r.comments(10) %]
     [%- IF comments.size %]
     <dl>
-      [%- FOREACH comment IN r.comments %]
+      [%- FOREACH comment IN comments %]
       <dt>name: [% comment.name | html %] ([% comment.created | html %])</dt>
       <dd>comment: [% comment.comment | html %]</dd>
-      [%- END # FOREACH comment IN r.comments %]
+      [%- END # FOREACH comment IN comments %]
     </dl>
     [%- END # IF comments.size %]
   </body>
