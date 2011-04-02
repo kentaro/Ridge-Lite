@@ -22,7 +22,31 @@ sub import {
     }
 
     Router::Simple::Sinatraish->export_to_level(1);
-    $pkg->config(Ridge::Lite::Config->new({namespace => 'Ridge::Lite'}));
+}
+
+sub process {
+    my ($class, $env, $args) = @_;
+    $class->install_config;
+    $class->configure;
+    $class->config->param(
+        root      => $args->{root},
+        namespace => 'Ridge::Lite',
+    );
+    $class->SUPER::process($env, $args);
+}
+
+sub install_config {
+    my $class = shift;
+    my $config_class = join '::', $class, 'Config';
+    eval <<"EOS";
+package $config_class;
+use base qw(Ridge::Lite::Config);
+
+package Ridge::Config;
+no warnings 'redefine';
+sub find_root { shift->param('root') }
+EOS
+    $class->config($config_class->new);
 }
 
 sub make_request {

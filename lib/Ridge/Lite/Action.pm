@@ -16,10 +16,9 @@ sub install {
     if (!Ridge::Lite::Engine->can($action)) {
         eval <<"EOS";
 package Ridge::Lite::Engine;
-no warnings 'redefine';
 sub $action : Public {
     my (\$self, \$r) = \@_;
-    @{[$view && '\$r->view->available(q{json});']}
+    @{[$view && '\$r->view->available(q{$view});']}
     Ridge::Lite::Action::${action}(\$r);
 }
 EOS
